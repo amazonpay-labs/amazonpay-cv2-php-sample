@@ -100,12 +100,14 @@ WEB サーバー等に配置してください。
 ## 設定に必要な情報の取得
 この後のステップで使用する以下の情報をセラーセントラルからご取得ください。
 
-| 1| Public Key Id |
-| 2| Private Key |
-| 3| Store Id (別名:クライアント ID) |
-| 4| Merchant Id (出品者 ID) |
+1. Public Key Id
+2. Private Key
+3. Store Id (別名:クライアント ID) 
+4. Merchant Id (出品者 ID) 
 
-取得方法の詳細について、ご不明な点がある場合は、FAQ にてご確認ください。
+
+取得方法の詳細について、ご不明な点がある場合は、[FAQ](http://amazonpay-integration.amazon.co.jp/amazonpay-faq-v2/detail.html?id=QA-59) にてご確認ください。
+
 ## 初期設定
 ### ①Private Key の配置
 Private Key を Keys ディレクトリに配置してください。
@@ -216,7 +218,7 @@ createCheckoutSessionConfig: {
 
 ### ⑤テストアカウントの用意
 動作を確認するためにサンドボックス環境のテスト用購入者アカウントを用意します。
-テストアカウントの作成方法が不明な場合は FAQ にてご確認ください。
+テストアカウントの作成方法が不明な場合は [FAQ](http://amazonpay-integration.amazon.co.jp/amazonpay-faq-v2/detail.html?id=QA-10/) にてご確認ください。
 ## 疎通確認
 ①～⑤の設定が完了しましたら、cart.html(apb.html)をブラウザなどで開いてください。
 以下のフローで、Amazon Pay の購入フローが完了できましたら、設定は完了となります。
