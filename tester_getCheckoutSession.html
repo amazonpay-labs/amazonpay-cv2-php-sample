@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<link rel="stylesheet" href="css/uikit.min.css"/>
+<link rel="stylesheet" href="css/uikit-rtl.min.css"/>
+<link rel="stylesheet" href="css/common.css"/>
+<title>getCheckoutSession</title>
+</head>
+<body>
+<div id="main_panel">
+checkoutSessionId:<input id="checkout_session_id" class="ap_textbox" style="width:260px;" type="text" placeholder="ec6771f0-8fe8-4850-982d-887a5ee4c296">
+<button id="execute" class="ap_button" type="button">getCheckoutSession</button>
+</div>
+
+<table class="uk-table uk-table-hover uk-table-striped">
+    <tr>
+        <td>buyer.name</td><td><span id="buyer_name"></span></td>
+    </tr>
+    <tr>
+        <td>buyer.email</td><td><span id="buyer_email"></span></td>
+    </tr>
+    <tr>
+        <td>buyer.buyerId</td><td><span id="buyer_buyerId"></span></td>
+    </tr>
+    <tr>
+        <td>buyer.phoneNumber</td><td><span id="buyer_phoneNumber"></span></td>
+    </tr>
+    <tr>
+        <td>chargeId</td><td><span id="chargeId"></span></td>
+    </tr>
+    <tr>
+        <td>chargePermissionId</td><td><span id="chargePermissionId"></span></td>
+    </tr>
+    <tr>
+        <td>chargePermissionType</td><td><span id="chargePermissionType"></span></td>
+    </tr>
+    <tr>
+        <td>checkoutSessionId</td><td><span id="checkoutSessionId"></span></td>
+    </tr>
+    <tr>
+        <td>checkoutType</td><td><span id="checkoutType"></span></td>
+    </tr>
+    <tr>
+        <td>constraints</td><td>
+            <ul id="constraints"></ul>
+        </td>
+    </tr>
+    <tr>
+        <td>creationTimestamp</td><td><span id="creationTimestamp"></span></td>
+    </tr>
+    <tr>
+        <td>expirationTimestamp</td><td><span id="expirationTimestamp"></span></td>
+    </tr>
+  
+    <tr>
+        <td>merchantMetadata.customInformation</td><td><span id="merchantMetadata_customInformation"></span></td>
+    </tr>
+    <tr>
+        <td>merchantMetadata.merchantReferenceId</td><td><span id="merchantMetadata_merchantReferenceId"></span></td>
+    </tr>
+    <tr>
+        <td>merchantMetadata.merchantStoreName</td><td><span id="merchantMetadata_merchantStoreName"></span></td>
+    </tr>
+    <tr>
+        <td>merchantMetadata.noteToBuyer</td><td><span id="merchantMetadata_noteToBuyer"></span></td>
+    </tr>
+    <tr>
+        <td>paymentDetails.canHandlePendingAuthorization</td><td><span id="paymentDetails_canHandlePendingAuthorization"></span></td>
+    </tr>
+    <tr>
+        <td>paymentDetails.chargeAmount_amount</td><td><span id="paymentDetails_chargeAmount_amount"></span></td>
+    </tr>
+    <tr>
+        <td>paymentDetails.chargeAmount_currencyCode</td><td><span id="paymentDetails_chargeAmount_currencyCode"></span></td>
+    </tr>
+    <tr>
+        <td>paymentDetails.paymentIntent</td><td><span id="paymentDetails_paymentIntent"></span></td>
+    </tr>
+    <tr>
+        <td>paymentDetails.softDescriptor</td><td><span id="paymentDetails_softDescriptor"></span></td>
+    </tr>
+    <tr>
+        <td>paymentDetails.allowOvercharge</td><td><span id="paymentDetails_allowOvercharge"></span></td>
+    </tr>
+    <tr>
+        <td>paymentDetails.extendExpiration</td><td><span id="paymentDetails_extendExpiration"></span></td>
+    </tr>
+    <tr>
+        <td>platformId</td><td><span id="platformId"></span></td>
+    </tr>
+    <tr>
+        <td>productType</td><td><span id="productType"></span></td>
+    </tr>
+    <tr>
+        <td>providerMetadata.providerReferenceId</td><td><span id="providerMetadata_providerReferenceId"></span></td>
+    </tr>
+    <tr>
+        <td>recurringMetadata.frequency.unit(Only Recurring)</td><td><span id="recurringMetadata_frequency_unit"></span></td>
+    </tr>
+    <tr>
+        <td>recurringMetadata.frequency.value(Only Recurring)</td><td><span id="recurringMetadata_frequency_value"></span></td>
+    </tr>
+    <tr>
+        <td>recurringMetadata.amount.amount(Only Recurring)</td><td><span id="recurringMetadata_amount_amount"></span></td>
+    </tr>
+    <tr>
+        <td>recurringMetadata.amount.currencyCode(Only Recurring)</td><td><span id="recurringMetadata_amount_currencyCode"></span></td>
+    </tr>
+    <tr>
+        <td>releaseEnvironment</td><td><span id="releaseEnvironment"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.addressLine1</td><td><span id="shippingAddress_addressLine1"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.addressLine2</td><td><span id="shippingAddress_addressLine2"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.addressLine3</td><td><span id="shippingAddress_addressLine3"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.city</td><td><span id="shippingAddress_city"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.countryCode</td><td><span id="shippingAddress_countryCode"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.county</td><td><span id="shippingAddress_county"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.district</td><td><span id="shippingAddress_district"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.name</td><td><span id="shippingAddress_name"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.postalCode</td><td><span id="shippingAddress_postalCode"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.phoneNumber</td><td><span id="shippingAddress_phoneNumber"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.stateOrRegion</td><td><span id="shippingAddress_stateOrRegion"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.addressLine1</td><td><span id="billingAddress_addressLine1"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.addressLine2</td><td><span id="billingAddress_addressLine2"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.addressLine3</td><td><span id="billingAddress_addressLine3"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.city</td><td><span id="billingAddress_city"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.countryCode</td><td><span id="billingAddress_countryCode"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.county</td><td><span id="billingAddress_county"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.district</td><td><span id="billingAddress_district"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.name</td><td><span id="billingAddress_name"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.postalCode</td><td><span id="billingAddress_postalCode"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.phoneNumber</td><td><span id="billingAddress_phoneNumber"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.stateOrRegion</td><td><span id="billingAddress_stateOrRegion"></span></td>
+    </tr>
+    <tr>
+        <td>statusDetails.lastUpdatedTimestamp</td><td><span id="statusDetails_lastUpdatedTimestamp"></span></td>
+    </tr>
+    <tr>
+        <td>statusDetails.reasonCode</td><td><span id="statusDetails_reasonCode"></span></td>
+    </tr>
+    <tr>
+        <td>statusDetails.reasonDescription</td><td><span id="statusDetails_reasonDescription"></span></td>
+    </tr>
+    <tr>
+        <td>statusDetails.state</td><td><span id="statusDetails_state"></span></td>
+    </tr>
+    <tr>
+        <td>storeId</td><td><span id="storeId"></span></td>
+    </tr>
+    <tr>
+        <td>webCheckoutDetails.amazonPayRedirectUrl</td><td><a id="webCheckoutDetails_amazonPayRedirectUrl_href" target="_blank"><span id="webCheckoutDetails_amazonPayRedirectUrl"></span></a></td>
+    </tr>
+    <tr>
+        <td>webCheckoutDetails.checkoutResultReturnUrl</td><td><span id="webCheckoutDetails_checkoutResultReturnUrl"></span></td>
+    </tr>
+    <tr>
+        <td>webCheckoutDetails.checkoutReviewReturnUrl</td><td><span id="webCheckoutDetails_checkoutReviewReturnUrl"></span></td>
+    </tr>
+    <tr>
+        <td>webCheckoutDetails.supplementaryData</td><td><span id="supplementaryData"></span></td>
+    </tr>
+</table>
+
+<script src="https://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<script src="js/uikit.min.js"></script>
+<script src="js/uikit-icons.min.js"></script>
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+    var checkout_session_id = getUrlParameter('checkout_session_id');
+    $("#checkout_session_id").val(checkout_session_id);
+
+    $("#execute").on("click", function() {
+        getCheckoutSession();
+    });
+
+});
+
+function getCheckoutSession() {
+    clearTable();
+    $.ajax({
+        type: 'POST',
+        url: './php/ap_sample_getCheckoutSession.php',
+        data: {
+            checkout_session_id: $("#checkout_session_id").val()
+        },
+    })
+    .then(
+        function(result) { //success
+            if (200 === $.parseJSON(result).status) {
+                var json = $.parseJSON(result).response;
+                console.log(json);
+
+                if (null != json.buyer) {
+                    $("#buyer_name").html(json.buyer.name);
+                    $("#buyer_email").html(json.buyer.email);
+                    $("#buyer_buyerId").html(json.buyer.buyerId);
+                    $("#buyer_phoneNumber").html(json.buyer.phoneNumber);
+                }
+                $("#chargeId").html(json.chargeId);
+                $("#chargePermissionId").html(json.chargePermissionId);
+                $("#chargePermissionType").html(json.chargePermissionType);
+                $("#checkoutSessionId").html(json.checkoutSessionId);
+                $("#checkoutType").html(json.checkoutType);
+                if (null != json.constraints) {
+                    $.each(json.constraints, function(index, value) {
+                        $("#constraints").append("<li class='constraint'>[" + value.constraintId + "]:" + value.description + "</li>");
+                    });
+                }
+                $("#creationTimestamp").html(json.creationTimestamp);
+                $("#expirationTimestamp").html(json.expirationTimestamp);
+    
+                if (null != json.merchantMetadata) {   
+                    $("#merchantMetadata_customInformation").html(json.merchantMetadata.customInformation);
+                    $("#merchantMetadata_merchantReferenceId").html(json.merchantMetadata.merchantReferenceId);
+                    $("#merchantMetadata_merchantStoreName").html(json.merchantMetadata.merchantStoreName);
+                    $("#merchantMetadata_noteToBuyer").html(json.merchantMetadata.noteToBuyer);
+                }
+                if (null != json.paymentDetails) {
+                    $("#paymentDetails_canHandlePendingAuthorization").html(json.paymentDetails.canHandlePendingAuthorization);
+                    if (null != json.paymentDetails.chargeAmount) {  
+                        $("#paymentDetails_chargeAmount_amount").html(json.paymentDetails.chargeAmount.amount);
+                        $("#paymentDetails_chargeAmount_currencyCode").html(json.paymentDetails.chargeAmount.currencyCode);
+                    }
+                    $("#paymentDetails_paymentIntent").html(json.paymentDetails.paymentIntent);
+                    $("#paymentDetails_softDescriptor").html(json.paymentDetails.softDescriptor);
+                    $("#paymentDetails_allowOvercharge").html(json.paymentDetails.allowOvercharge);
+                    $("#paymentDetails_extendExpiration").html(json.paymentDetails.extendExpiration);
+                }
+                $("#platformId").html(json.platformId);
+                $("#productType").html(json.productType);
+                if (null != json.providerMetadata) {
+                    $("#providerMetadata_providerReferenceId").html(json.providerMetadata.providerReferenceId);
+                }
+                if (null != json.recurringMetadata) {
+                    if (null != json.recurringMetadata.frequency) {  
+                        $("#recurringMetadata_frequency_unit").html(json.recurringMetadata.frequency.unit);
+                        $("#recurringMetadata_frequency_value").html(json.recurringMetadata.frequency.value);
+                    }
+                    if (null != json.recurringMetadata.amount) {
+                        $("#recurringMetadata_amount_amount").html(json.recurringMetadata.amount.amount);
+                        $("#recurringMetadata_amount_currencyCode").html(json.recurringMetadata.amount.currencyCode);
+                    }
+                }
+                $("#releaseEnvironment").html(json.releaseEnvironment);
+                if (null != json.shippingAddress) {
+                    $("#shippingAddress_addressLine1").html(json.shippingAddress.addressLine1);
+                    $("#shippingAddress_addressLine2").html(json.shippingAddress.addressLine2);
+                    $("#shippingAddress_addressLine3").html(json.shippingAddress.addressLine3);
+                    $("#shippingAddress_city").html(json.shippingAddress.city);
+                    $("#shippingAddress_countryCode").html(json.shippingAddress.countryCode);
+                    $("#shippingAddress_county").html(json.shippingAddress.county);
+                    $("#shippingAddress_district").html(json.shippingAddress.district);
+                    $("#shippingAddress_name").html(json.shippingAddress.name);
+                    $("#shippingAddress_postalCode").html(json.shippingAddress.postalCode);
+                    $("#shippingAddress_phoneNumber").html(json.shippingAddress.phoneNumber);
+                    $("#shippingAddress_stateOrRegion").html(json.shippingAddress.stateOrRegion);
+                }
+                if (null != json.billingAddress) {
+                    $("#billingAddress_addressLine1").html(json.billingAddress.addressLine1);
+                    $("#billingAddress_addressLine2").html(json.billingAddress.addressLine2);
+                    $("#billingAddress_addressLine3").html(json.billingAddress.addressLine3);
+                    $("#billingAddress_city").html(json.billingAddress.city);
+                    $("#billingAddress_countryCode").html(json.billingAddress.countryCode);
+                    $("#billingAddress_county").html(json.billingAddress.county);
+                    $("#billingAddress_district").html(json.billingAddress.district);
+                    $("#billingAddress_name").html(json.billingAddress.name);
+                    $("#billingAddress_postalCode").html(json.billingAddress.postalCode);
+                    $("#billingAddress_phoneNumber").html(json.billingAddress.phoneNumber);
+                    $("#billingAddress_stateOrRegion").html(json.billingAddress.stateOrRegion);
+                }
+                if (null != json.statusDetails) {
+                    $("#statusDetails_lastUpdatedTimestamp").html(json.statusDetails.lastUpdatedTimestamp);
+                    $("#statusDetails_reasonCode").html(json.statusDetails.reasonCode);
+                    $("#statusDetails_reasonDescription").html(json.statusDetails.reasonDescription);
+                    $("#statusDetails_state").html(json.statusDetails.state);
+                }
+                $("#storeId").html(json.storeId);
+                $("#supplementaryData").html(json.supplementaryData);
+                if (null != json.webCheckoutDetails) {
+                    $("#webCheckoutDetails_amazonPayRedirectUrl").html(json.webCheckoutDetails.amazonPayRedirectUrl);
+                    $("#webCheckoutDetails_amazonPayRedirectUrl_href").attr("href", json.webCheckoutDetails.amazonPayRedirectUrl);
+                    
+                    $("#webCheckoutDetails_checkoutResultReturnUrl").html(json.webCheckoutDetails.checkoutResultReturnUrl);
+                    $("#webCheckoutDetails_checkoutReviewReturnUrl").html(json.webCheckoutDetails.checkoutReviewReturnUrl);
+                }
+            } else {
+                console.log(result);
+                alert("error" + "\n" + result);
+            }
+        },
+        function() { //failure
+            console.log("error");
+        }
+    );
+}
+
+function clearTable() {
+    $("#buyer_name").html("");
+    $("#buyer_email").html("");
+    $("#buyer_buyerId").html("");
+    $("#buyer_phoneNumber").html("");
+    $("#chargeId").html("");
+    $("#chargePermissionId").html("");
+    $("#chargePermissionType").html("");
+    $("#checkoutSessionId").html("");
+    $("checkoutType").html("");
+    $(".constraint").remove();
+    $("#creationTimestamp").html("");
+    $("#expirationTimestamp").html("");
+    $("#merchantMetadata_customInformation").html("");
+    $("#merchantMetadata_merchantReferenceId").html("");
+    $("#merchantMetadata_merchantStoreName").html("");
+    $("#merchantMetadata_noteToBuyer").html("");
+    $("#paymentDetails_canHandlePendingAuthorization").html("");
+    $("#paymentDetails_chargeAmount_amount").html("");
+    $("#paymentDetails_chargeAmount_currencyCode").html("");
+    $("#paymentDetails_paymentIntent").html("");
+    $("#paymentDetails_softDescriptor").html("");
+    $("#paymentDetails_allowOvercharge").html("");
+    $("#paymentDetails_extendExpiration").html("");
+    $("#platformId").html("");
+    $("#productType").html("");
+    $("#recurringMetadata_frequency_unit").html("");
+    $("#recurringMetadata_frequency_value").html("");
+    $("#recurringMetadata_amount_amount").html("");
+    $("#recurringMetadata_amount_currencyCode").html("");
+    $("#releaseEnvironment").html("");
+    $("#providerMetadata_providerReferenceId").html("");
+    $("#shippingAddress_addressLine1").html("");
+    $("#shippingAddress_addressLine2").html("");
+    $("#shippingAddress_addressLine3").html("");
+    $("#shippingAddress_city").html("");
+    $("#shippingAddress_countryCode").html("");
+    $("#shippingAddress_county").html("");
+    $("#shippingAddress_district").html("");
+    $("#shippingAddress_name").html("");
+    $("#shippingAddress_postalCode").html("");
+    $("#shippingAddress_phoneNumber").html("");
+    $("#shippingAddress_stateOrRegion").html("");
+    $("#billingAddress_addressLine1").html("");
+    $("#billingAddress_addressLine2").html("");
+    $("#billingAddress_addressLine3").html("");
+    $("#billingAddress_city").html("");
+    $("#billingAddress_countryCode").html("");
+    $("#billingAddress_county").html("");
+    $("#billingAddress_district").html("");
+    $("#billingAddress_name").html("");
+    $("#billingAddress_postalCode").html("");
+    $("#billingAddress_phoneNumber").html("");
+    $("#billingAddress_stateOrRegion").html("");
+    $("#statusDetails_lastUpdatedTimestamp").html("");
+    $("#statusDetails_reasonCode").html("");
+    $("#statusDetails_reasonDescription").html("");
+    $("#statusDetails_state").html("");
+    $("#storeId").html("");
+    $("#webCheckoutDetails_amazonPayRedirectUrl").html("");
+    $("#webCheckoutDetails_checkoutResultReturnUrl").html("");
+    $("#webCheckoutDetails_checkoutReviewReturnUrl").html("");
+    $("#supplementaryData").html("");
+
+}
+</script>
+</body>
+</html>

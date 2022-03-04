@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<link rel="stylesheet" href="css/uikit.min.css"/>
+<link rel="stylesheet" href="css/uikit-rtl.min.css"/>
+<link rel="stylesheet" href="css/common.css"/>
+<title>Merchant review order page</title>
+
+</head>
+<body>
+<div id="main_panel">
+<h1>Review order</h1>
+<h2>Orderer Name (from Billing Address)</h2>
+<table>
+    <!--<tr>-->
+    <!--    <td>Name:</td><td><div id="buyerName"></div></td>-->
+    <!--</tr>-->
+    <tr>
+        <td>Name:</td><td><div id="ba_addressName"></div></td>
+    </tr>
+    <tr>
+        <td>Email:</td><td><div id="buyerEmail"></div></td>
+    </tr>
+    <tr>
+        <td>PostalCode:</td><td><div id="ba_addressZipcode"></div></td>
+    </tr>
+    <tr>
+        <td>StateOrRegion:</td><td><div id="ba_addressStageOrRegion"></div></td> 
+    </tr>
+    <tr>
+        <td>addressLine1:</td><td><div id="ba_addressLine1"></div></td>
+    </tr>
+    <tr>
+        <td>addressLine2:</td><td><div id="ba_addressLine2"></div></td>
+    </tr>
+    <tr>
+        <td>addressLine3:</td><td><div id="ba_addressLine3"></div></td>
+    </tr>
+    <tr>
+        <td>PhoneNumber:</td><td><div id="ba_phoneNumber"></div></td>
+    </tr>
+
+</table>    
+<h2>
+    Shipping Address
+    <button id="updateCheckoutDetailsAddress" class="command" type="button">update</button>
+</h2>
+<table>
+    <tr>
+        <td>Name:</td><td><div id="addressName"></div></td>
+    </tr>
+    <tr>
+        <td>PostalCode:</td><td><div id="addressZipcode"></div></td>
+    </tr>
+    <tr>
+        <td>StateOrRegion:</td><td><div id="addressStageOrRegion"></div></td> 
+    </tr>
+    <tr>
+        <td>addressLine1:</td><td><div id="addressLine1"></div></td>
+    </tr>
+    <tr>
+        <td>addressLine2:</td><td><div id="addressLine2"></div></td>
+    </tr>
+    <tr>
+        <td>addressLine3:</td><td><div id="addressLine3"></div></td>
+    </tr>
+    <tr>
+        <td>PhoneNumber:</td><td><div id="phoneNumber"></div></td>
+    </tr>
+</table>
+
+<h2>
+    Payment Method
+    <button id="updateCheckoutDetailsPayment" class="command" type="button">update</button>
+</h2>
+<img src="./css/logo-pay.png" width="30" ></img>&nbsp;&nbsp;<span id="paymentDescriptor"></span>
+
+<hr>
+お支払い: 123 円
+<br>
+<div>
+    <button id="placeorder" class="ap_button" type="button">Place Order</button>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<script src="js/uikit.min.js"></script>
+<script src="js/uikit-icons.min.js"></script>
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+    var checkout_session_id = getUrlParameter('amazonCheckoutSessionId');
+
+    $.ajax({
+        type: 'POST',
+        url: './php/ap_sample_getCheckoutSession.php',
+        data: {
+            checkout_session_id: checkout_session_id
+        },
+    })
+    .then(
+        function(result) { //success
+            var json = $.parseJSON(result).response;
+            console.log(result);
+
+            //$("#buyerName").html(json.buyer.name);
+            $("#buyerEmail").html(json.buyer.email);
+            $("#paymentDescriptor").html(json.paymentPreferences[0].paymentDescriptor);
+            if(null != json.shippingAddress){
+            $("#addressName").html(json.shippingAddress.name);
+            $("#addressLine1").html(json.shippingAddress.addressLine1);
+            $("#addressLine2").html(json.shippingAddress.addressLine2);
+            $("#addressLine3").html(json.shippingAddress.addressLine3);
+            $("#addressStageOrRegion").html(json.shippingAddress.stateOrRegion);
+            $("#addressZipcode").html(json.shippingAddress.postalCode);
+            $("#phoneNumber").html(json.shippingAddress.phoneNumber);
+            }
+            if(null != json.billingAddress){
+            $("#ba_addressName").html(json.billingAddress.name);
+            $("#ba_addressLine1").html(json.billingAddress.addressLine1);
+            $("#ba_addressLine2").html(json.billingAddress.addressLine2);
+            $("#ba_addressLine3").html(json.billingAddress.addressLine3);
+            $("#ba_addressStageOrRegion").html(json.billingAddress.stateOrRegion);
+            $("#ba_addressZipcode").html(json.billingAddress.postalCode);
+            $("#ba_phoneNumber").html(json.billingAddress.phoneNumber);
+            }
+        },
+        function() { //failure
+            console.log("error");
+        }
+    );
+
+    amazon.Pay.bindChangeAction('#updateCheckoutDetailsAddress', {
+        amazonCheckoutSessionId: checkout_session_id,
+        changeAction: 'changeAddress'
+    });
+    
+    amazon.Pay.bindChangeAction('#updateCheckoutDetailsPayment', {
+        amazonCheckoutSessionId: checkout_session_id,
+        changeAction: 'changePayment'
+    });
+
+    $(document).on('click','#placeorder', function() {
+        $.ajax({
+            type: 'POST',
+            url: './php/updateCheckoutSession.php',
+            data: {
+                checkout_session_id: checkout_session_id
+            },
+        })
+        .then(
+            function(result) { //success
+                var json = $.parseJSON(result).response;
+                console.log(result);
+
+                if(json.webCheckoutDetails.amazonPayRedirectUrl != null) {
+                    window.location.href = json.webCheckoutDetails.amazonPayRedirectUrl;
+                }
+            },
+            function() { //failure
+                console.log("error");
+            }
+        );
+    });
+});
+</script>
+</body>
+</html>

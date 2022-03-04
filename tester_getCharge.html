@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<link rel="stylesheet" href="css/uikit.min.css"/>
+<link rel="stylesheet" href="css/uikit-rtl.min.css"/>
+<link rel="stylesheet" href="css/common.css"/>
+<title>getCharge</title>
+</head>
+<body>
+<div id="main_panel">
+chargeId:<input id="charge_id" class="ap_textbox" style="width:260px;" type="text" placeholder="S03-9605039-0951356-C015593">
+<button id="execute" class="ap_button" type="button">getCharge</button>
+</div>
+
+<table class="uk-table uk-table-hover uk-table-striped">
+    <tr>
+        <td>captureAmount.amount</td><td><span id="captureAmount_amount"></span></td>
+    </tr>
+    <tr>
+        <td>captureAmount.currencyCode</td><td><span id="captureAmount_currencyCode"></span></td>
+    </tr>
+    <tr>
+        <td>chargeAmount.amount</td><td><span id="chargeAmount_amount"></span></td>
+    </tr>
+    <tr>
+        <td>chargeAmount.currencyCode</td><td><span id="chargeAmount_currencyCode"></span></td>
+    </tr>
+    <tr>
+        <td>chargeId</td><td><span id="chargeId"></span></td>
+    </tr>
+    <tr>
+        <td>chargePermissionId</td><td><span id="chargePermissionId"></span></td>
+    </tr>
+    <tr>
+        <td>creationTimestamp</td><td><span id="creationTimestamp"></span></td>
+    </tr>
+    <tr>
+        <td>expirationTimestamp</td><td><span id="expirationTimestamp"></span></td>
+    </tr>
+    <tr>
+        <td>merchantMetadata.customInformation</td><td><span id="merchantMetadata_customInformation"></span></td>
+    </tr>
+    <tr>
+        <td>merchantMetadata.merchantReferenceId</td><td><span id="merchantMetadata_merchantReferenceId"></span></td>
+    </tr>
+    <tr>
+        <td>merchantMetadata.merchantStoreName</td><td><span id="merchantMetadata_merchantStoreName"></span></td>
+    </tr>
+    <tr>
+        <td>merchantMetadata.noteToBuyer</td><td><span id="merchantMetadata_noteToBuyer"></span></td>
+    </tr>
+    <tr>
+        <td>providerMetadata.providerReferenceId</td><td><span id="providerReferenceId"></span></td>
+    </tr>
+    <tr>
+        <td>refundedAmount.amount</td><td><span id="refundedAmount_amount"></span></td>
+    </tr>
+    <tr>
+        <td>refundedAmount.currencyCode</td><td><span id="refundedAmount_currencyCode"></span></td>
+    </tr>
+    <tr>
+        <td>releaseEnvironment</td><td><span id="releaseEnvironment"></span></td>
+    </tr>
+    <tr>
+        <td>softDescriptor</td><td><span id="softDescriptor"></span></td>
+    </tr>
+    <tr>
+        <td>statusDetails.lastUpdatedTimestamp</td><td><span id="statusDetails_lastUpdatedTimestamp"></span></td>
+    </tr>
+    <tr>
+        <td>statusDetails.reasonCode</td><td><span id="statusDetails_reasonCode"></span></td>
+    </tr>
+    <tr>
+        <td>statusDetails.reasonDescription</td><td><span id="statusDetails_reasonDescription"></span></td>
+    </tr>
+    <tr>
+        <td>statusDetails.state</td><td><span id="statusDetails_state"></span></td>
+    </tr>
+
+</table>
+
+<script src="https://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<script src="js/uikit.min.js"></script>
+<script src="js/uikit-icons.min.js"></script>
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+    var charge_id = getUrlParameter('charge_id');
+    $("#charge_id").val(charge_id);
+
+    $("#execute").on("click", function() {
+        getCharge();
+    });
+
+});
+
+function getCharge() {
+    clearTable();
+    $.ajax({
+        type: 'POST',
+        url: './php/ap_sample_getCharge.php',
+        data: {
+            charge_id: $("#charge_id").val()
+        },
+    })
+    .then(
+        function(result) { //success
+            if (200 === $.parseJSON(result).status) {
+                var json = $.parseJSON(result).response;
+                console.log(json);
+
+                if (null != json.captureAmount) {
+                    $("#captureAmount_amount").html(json.captureAmount.amount);
+                    $("#captureAmount_currencyCode").html(json.captureAmount.currencyCode);
+                }
+                if (null != json.chargeAmount) {
+                    $("#chargeAmount_amount").html(json.chargeAmount.amount);
+                    $("#chargeAmount_currencyCode").html(json.chargeAmount.currencyCode);
+                }
+
+                $("#chargeId").html(json.chargeId);
+                $("#chargePermissionId").html(json.chargePermissionId);
+                $("#creationTimestamp").html(json.creationTimestamp);
+                $("#expirationTimestamp").html(json.expirationTimestamp);    
+                if (null != json.merchantMetadata) {        
+                    $("#merchantMetadata_customInformation").html(json.merchantMetadata.customInformation);
+                    $("#merchantMetadata_merchantReferenceId").html(json.merchantMetadata.merchantReferenceId);
+                    $("#merchantMetadata_merchantStoreName").html(json.merchantMetadata.merchantStoreName);
+                    $("#merchantMetadata_noteToBuyer").html(json.merchantMetadata.noteToBuyer);
+                }
+                if (null != json.providerMetadata) {
+                    $("#providerReferenceId").html(json.providerMetadata.providerReferenceId);
+                }
+                if (null != json.refundedAmount) {
+                    $("#refundedAmount_amount").html(json.refundedAmount.amount);
+                    $("#refundedAmount_currencyCode").html(json.refundedAmount.currencyCode);
+                }
+                $("#releaseEnvironment").html(json.releaseEnvironment);
+                $("#softDescriptor").html(json.softDescriptor);
+                if (null != json.statusDetails) {        
+                    $("#statusDetails_lastUpdatedTimestamp").html(json.statusDetails.lastUpdatedTimestamp);
+                    $("#statusDetails_reasonCode").html(json.statusDetails.reasonCode);
+                    $("#statusDetails_reasonDescription").html(json.statusDetails.reasonDescription);
+                    $("#statusDetails_state").html(json.statusDetails.state);
+                }
+                
+            } else {
+                console.log(result);
+                alert("error" + "\n" + result);
+            }
+        },
+        function() { //failure
+            console.log("error");
+        }
+    );
+}
+
+function clearTable() {
+    $("#captureAmount_amount").html("");
+    $("#captureAmount_currencyCode").html("");
+    $("#chargeAmount_amount").html("");
+    $("#chargeAmount_currencyCode").html("");
+    $("#chargeId").html("");
+    $("#chargePermissionId").html("");
+    $("#creationTimestamp").html("");
+    $("#expirationTimestamp").html("");
+    $("#merchantMetadata_customInformation").html("");
+    $("#merchantMetadata_merchantReferenceId").html("");
+    $("#merchantMetadata_merchantStoreName").html("");
+    $("#merchantMetadata_noteToBuyer").html("");
+    $("#providerReferenceId").html("");
+    $("#refundedAmount_amount").html("");
+    $("#refundedAmount_currencyCode").html("");
+    $("#releaseEnvironment").html("");
+    $("#softDescriptor").html("");
+    $("#statusDetails_lastUpdatedTimestamp").html("");
+    $("#statusDetails_reasonCode").html("");
+    $("#statusDetails_reasonDescription").html("");
+    $("#statusDetails_state").html("");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<link rel="stylesheet" href="css/uikit.min.css"/>
+<link rel="stylesheet" href="css/uikit-rtl.min.css"/>
+<link rel="stylesheet" href="css/common.css"/>
+<title>Signin - Sandbox</title>
+</head>
+<body>
+<div id="main_panel">
+    <table>
+        <tr>
+            <td>merchant_id:</td><td><input id="merchant_id" class="ap_textbox" style="width:120px;" type="text" placeholder="A23YM23UEBY8FM" value="A23YM23UEBY8FM"></td>
+        </tr>
+        <tr>
+            <td>ledgerCurrency:</td><td><input id="ledgerCurrency" class="ap_textbox" style="width:80px;" type="text" placeholder="JPY" value="JPY">"JPY"</td>
+        </tr>                
+        <tr>
+            <td>checkoutLanguage:</td><td><input id="checkoutLanguage" class="ap_textbox" style="width:80px;" type="text" placeholder="ja_JP" value="ja_JP">'en_US', 'de_DE', 'fr_FR', 'it_IT', 'es_ES', 'en_GB', 'ja_JP'</td>
+        </tr>
+        <tr>
+            <td>productType:</td><td><input id="productType" class="ap_textbox" style="width:80px;" type="text" placeholder="SignIn" value="SignIn">'SignIn'</td>
+        </tr>
+        <tr>
+            <td>placement:</td><td><input id="placement" class="ap_textbox" style="width:80px;" type="text" placeholder="Other" value="Other">‘Home’, ‘Product’, ‘Cart’, ‘Checkout’, and 'Other'</td>
+        </tr>
+        <tr>
+            <td>buttonColor:</td><td><input id="buttonColor" class="ap_textbox" style="width:80px;" type="text" placeholder="Gold" value="Gold">'Gold', 'LightGray', 'DarkGray'</td>
+        </tr>
+        <tr>
+            <td>sandbox:</td><td><input id="sandbox_mode" class="ap_textbox" style="width:40px;" type="checkbox" checked></td>
+        </tr>
+    </table>
+    <button id="signin" class="ap_button" type="button">Sign In</button>
+    <br>
+    <br>
+    <button id="signout" class="ap_button" type="button">Sign Out</button>
+    <br>
+    <br>
+    <div style="margin: 0 auto;" id="AmazonPayButton"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<script src="js/uikit.min.js"></script>
+<script src="js/uikit-icons.min.js"></script>
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    $("#signin").on("click", function() {
+    //SignIn
+    //payloadの設定
+    //signInScopesを確認し、適切な値を設定して下さい。
+    const payload = '{"signInReturnUrl":"https://XXXXXXX/tester_getBuyer.html","storeId":"amzn1.application-oa2-client.XXXXXXX","signInScopes":["name", "email", "postalCode","shippingAddress","billingAddress","phoneNumber"]}';
+    //Signature生成 (payloadが変更とならない限り、同じSignatureが利用できる為、Signatureの都度生成は不要です。ここではテスト用にpayloadの変更が発生することを考慮して都度生成しています。)
+    $.ajax({
+        type: 'POST',
+        url: './php/buttonSignature.php',
+        data: {
+            payload : payload
+        },
+    })
+    .then(
+        function(result) {
+        const buttonsignature = result;
+        
+            amazon.Pay.renderButton('#AmazonPayButton', {
+                 //set checkout environment
+                 merchantId: $("#merchant_id").val(),
+                 ledgerCurrency: $("#ledgerCurrency").val(),
+                 sandbox: $("#sandbox_mode").is(':checked'),
+                 // customize the buyer experience
+                 checkoutLanguage: $("#checkoutLanguage").val(),
+                 productType: $("#productType").val(),
+                 placement: $("#placement").val(),
+                 buttonColor: $("#buttonColor").val(),
+                 // configure Create Checkout Session request
+                 signInConfig: {                     
+                     payloadJSON: payload, // payload generated in step 2
+                     signature: buttonsignature, // signature generatd in step 3
+                     publicKeyId: '####Set your Public Key Id####'
+                 }   
+            });
+        },
+        function(){
+            console.log(error);
+        });
+    });
+    
+    $("#signout").on("click", function() {
+        amazon.Pay.signout();
+        alert("signout");
+    });
+});
+</script>
+</body>
+</html>

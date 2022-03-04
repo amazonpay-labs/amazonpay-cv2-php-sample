@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<link rel="stylesheet" href="css/uikit.min.css"/>
+<link rel="stylesheet" href="css/uikit-rtl.min.css"/>
+<link rel="stylesheet" href="css/common.css"/>
+<title>Merchant order error</title>
+</head>
+<body>
+<div id="main_panel">
+<h1>Order Error</h1>
+Error occured! you need to select another payment method and try again...<br>
+<a href="cart.html">go to cart page</a>
+<br>
+<br>
+<button id="signout" class="command" type="button">signout</button>
+</div>
+
+<script src="https://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<script src="js/uikit.min.js"></script>
+<script src="js/uikit-icons.min.js"></script>
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+    $("#signout").on("click", function() {
+        amazon.Pay.signout();
+        alert("signout");
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<link rel="stylesheet" href="css/uikit.min.css"/>
+<link rel="stylesheet" href="css/uikit-rtl.min.css"/>
+<link rel="stylesheet" href="css/common.css"/>
+<title>Order Review page (Payment selection page)</title>
+</head>
+<body>
+
+<div id="main_panel">
+<h1>Order Review page (Payment selection page)</h1>
+(事業者様の注文確認ページ　または、決済方法選択ページ)
+<h2>お支払い方法：Amazon Pay</h2>
+<div style="margin: 0 auto;" id="AmazonPayButton"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<script src="js/uikit.min.js"></script>
+<script src="js/uikit-icons.min.js"></script>
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    //buttonSignatureForapbで設定したpayloadとsignatureを設定してください。
+    const payload = 'XXXXXXX';
+    const buttonsignature = 'XXXXXXX';
+
+    amazon.Pay.renderButton('#AmazonPayButton', {
+         //set checkout environment
+         merchantId: '####Set your MerchantId####',
+         ledgerCurrency: 'JPY',
+         sandbox: true,               
+         checkoutLanguage: 'ja_JP',
+         // customize the buyer experience お支払い方法のみの場合は、productTypeに'PayOnly'を設定して下さい。
+         productType: 'PayAndShip',
+         placement: 'Other',
+         // configure Create Checkout Session request
+         createCheckoutSessionConfig: {                     
+             payloadJSON: payload, // payload generated in step 2
+             signature: buttonsignature, // signature generatd in step 3
+             publicKeyId: '####Set your Public Key Id####'
+         }   
+    });
+</script>
+
+</body>
+</html>

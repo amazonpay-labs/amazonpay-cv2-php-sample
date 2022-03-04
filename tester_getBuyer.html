@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<link rel="stylesheet" href="css/uikit.min.css"/>
+<link rel="stylesheet" href="css/uikit-rtl.min.css"/>
+<link rel="stylesheet" href="css/common.css"/>
+<title>getBuyer</title>
+</head>
+<body>
+<div id="main_panel">
+BuyerToken:<input id="buyerToken" class="ap_textbox" style="width:260px;" type="text" placeholder="example">
+<button id="execute" class="ap_button" type="button">getBuyer</button>
+</div>
+
+<table class="uk-table uk-table-hover uk-table-striped">
+    <tr>
+        <td>buyerId</td><td><span id="buyer_buyerId"></span></td>
+    </tr>  
+    <tr>
+        <td>name</td><td><span id="buyer_name"></span></td>
+    </tr>
+    <tr>
+        <td>email</td><td><span id="buyer_email"></span></td>
+    </tr>
+    <tr>
+        <td>postalCode</td><td><span id="buyer_postalCode"></span></td>
+    </tr>  
+    <tr>
+        <td>countryCode</td><td><span id="buyer_countryCode"></span></td>
+    </tr>
+    <tr>
+        <td>phoneNumber</td><td><span id="buyer_phoneNumber"></span></td>
+    </tr>  
+    <tr>
+        <td>shippingAddress.name</td><td><span id="buyer_shippingAddressname"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.countryCode</td><td><span id="buyer_shippingAddresscountryCode"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.postalCode</td><td><span id="buyer_shippingAddresspostalCode"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.stateOrRegion</td><td><span id="buyer_shippingAddressstateOrRegion"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.addressLine1</td><td><span id="buyer_shippingAddressaddressLine1"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.addressLine2</td><td><span id="buyer_shippingAddressaddressLine2"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.addressLine3</td><td><span id="buyer_shippingAddressaddressLine3"></span></td>
+    </tr>
+    <tr>
+        <td>shippingAddress.phoneNumber</td><td><span id="buyer_shippingAddressphoneNumber"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.name</td><td><span id="buyer_billingAddressname"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.countryCode</td><td><span id="buyer_billingAddresscountryCode"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.postalCode</td><td><span id="buyer_billingAddresspostalCode"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.stateOrRegion</td><td><span id="buyer_billingAddressstateOrRegion"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.addressLine1</td><td><span id="buyer_billingAddressaddressLine1"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.addressLine2</td><td><span id="buyer_billingAddressaddressLine2"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.addressLine3</td><td><span id="buyer_billingAddressaddressLine3"></span></td>
+    </tr>
+    <tr>
+        <td>billingAddress.phoneNumber</td><td><span id="buyer_billingAddressphoneNumber"></span></td>
+    </tr>
+</table>
+
+<script src="https://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<script src="js/uikit.min.js"></script>
+<script src="js/uikit-icons.min.js"></script>
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+    var buyerToken = getUrlParameter('buyerToken');
+    $("#buyerToken").val(buyerToken);
+
+    $("#execute").on("click", function() {
+        getBuyer();
+    });
+
+});
+
+function getBuyer() {
+    clearTable();
+    $.ajax({
+        type: 'POST',
+        url: './php/ap_sample_getBuyer.php',
+        data: {
+            buyer_token: $("#buyerToken").val()
+        },
+    })
+    .then(
+        function(result) { //success
+            if (200 === $.parseJSON(result).status) {
+                var json = $.parseJSON(result).response;
+                console.log(json);
+                if (null != json) {
+                    $("#buyer_name").html(json.name);
+                    $("#buyer_email").html(json.email);
+                    $("#buyer_buyerId").html(json.buyerId);
+                    $("#buyer_postalCode").html(json.postalCode);
+                    $("#buyer_countryCode").html(json.countryCode);
+                    if (null != json.phoneNumber) {
+                    $("#buyer_phoneNumber").html(json.phoneNumber);
+                    }
+                    if (null != json.shippingAddress) {
+                    $("#buyer_shippingAddressname").html(json.shippingAddress.name);
+                    $("#buyer_shippingAddresspostalCode").html(json.shippingAddress.postalCode);
+                    $("#buyer_shippingAddresscountryCode").html(json.shippingAddress.countryCode);
+                    $("#buyer_shippingAddressstateOrRegion").html(json.shippingAddress.stateOrRegion);
+                    $("#buyer_shippingAddressaddressLine1").html(json.shippingAddress.addressLine1);
+                    $("#buyer_shippingAddressaddressLine2").html(json.shippingAddress.addressLine2);
+                    $("#buyer_shippingAddressaddressLine3").html(json.shippingAddress.addressLine3);
+                    $("#buyer_shippingAddressphoneNumber").html(json.shippingAddress.phoneNumber);
+                    }
+                    if (null != json.billingAddress) {
+                    $("#buyer_billingAddressname").html(json.billingAddress.name);
+                    $("#buyer_billingAddresspostalCode").html(json.billingAddress.postalCode);
+                    $("#buyer_billingAddresscountryCode").html(json.billingAddress.countryCode);
+                    $("#buyer_billingAddressstateOrRegion").html(json.billingAddress.stateOrRegion);
+                    $("#buyer_billingAddressaddressLine1").html(json.billingAddress.addressLine1);
+                    $("#buyer_billingAddressaddressLine2").html(json.billingAddress.addressLine2);
+                    $("#buyer_billingAddressaddressLine3").html(json.billingAddress.addressLine3);
+                    $("#buyer_billingAddressphoneNumber").html(json.billingAddress.phoneNumber);
+                    }
+                }
+            } else {
+                console.log(result);
+                alert("error" + "\n" + result);
+            }
+        },
+        function() { //failure
+            console.log("error");
+        }
+    );
+}
+
+function clearTable() {
+    $("#buyer_name").html("");
+    $("#buyer_email").html("");
+    $("#buyer_buyerId").html("");
+    $("#buyer_postalCode").html("");
+    $("#buyer_countryCode").html("");
+    $("#buyer_phoneNumber").html("");
+    $("#buyer_shippingAddressname").html("");
+    $("#buyer_shippingAddresspostalCode").html("");
+    $("#buyer_shippingAddresscountryCode").html("");
+    $("#buyer_shippingAddressstateOrRegion").html("");
+    $("#buyer_shippingAddressaddressLine1").html("");
+    $("#buyer_shippingAddressaddressLine2").html("");
+    $("#buyer_shippingAddressaddressLine3").html("");
+    $("#buyer_shippingAddressphoneNumber").html("");
+    $("#buyer_billingAddressname").html("");
+    $("#buyer_billingAddresspostalCode").html("");
+    $("#buyer_billingAddresscountryCode").html("");
+    $("#buyer_billingAddressstateOrRegion").html("");
+    $("#buyer_billingAddressaddressLine1").html("");
+    $("#buyer_billingAddressaddressLine2").html("");
+    $("#buyer_billingAddressaddressLine3").html("");
+    $("#buyer_billingAddressphoneNumber").html("");
+}
+</script>
+</body>
+</html>

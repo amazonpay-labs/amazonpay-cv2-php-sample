@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<link rel="stylesheet" href="css/uikit.min.css"/>
+<link rel="stylesheet" href="css/uikit-rtl.min.css"/>
+<link rel="stylesheet" href="css/common.css"/>
+<title>Tester result page</title>
+</head>
+<body>
+<div id="main_panel">
+<h1>Tester result page</h1>
+<a href="tester_buttonOnetime.html">go to Onetime button render page</a><br>
+<a href="tester_buttonRecurring.html">go to Recurring button render page</a><br>
+<a href="tester_buttonSignIn.html">go to Signin button render page</a><br>
+<a href="tester_buttonAPB.html">go to APB button render page</a><br>
+<table>
+    <tr>
+        <td>checkout_session_id:</td><td id="checkoutSessionId_area"><span id="checkoutSessionId"></span></td>
+        <td><span id="createCheckoutSession" class="command">create</span></td>
+        <td><span id="getCheckoutSession" class="command">get</span></td>
+        <td><span id="updateCheckoutSession" class="command">update</span></td>
+        <td><span id="completeCheckoutSession" class="command">complete</span></td>
+    </tr>
+    <tr>
+        <td>chargePermissionId:</td><td><span id="chargePermissionId"></span></td>
+        <td><span id="getChargePermission" class="command">get</span></td>
+        <td><span id="updateChargePermission" class="command">update</span></td>
+        <td colspan="2"><span id="closeChargePermission" class="command">close</span></td>
+    </tr>
+    <tr>
+        <td>chargeId:</td><td><span id="chargeId"></span></td>
+        <td><span id="createCharge" class="command">create</span></td>
+        <td><span id="getCharge" class="command">get</span></td>
+        <td><span id="captureCharge" class="command">capture</span></td>
+        <td><span id="cancelCharge" class="command">cancel</span></td>
+    </tr>
+    <tr>
+        <td>refund:</td><td></td>
+        <td><span id="createRefund" class="command">create</span></td>
+        <td colspan="3"><span id="getRefund" class="command">get</span></td>
+    </tr>
+</table>
+<br>
+<div id="change" class="ap_button">changeAction</div>
+
+<script src="https://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<script src="js/uikit.min.js"></script>
+<script src="js/uikit-icons.min.js"></script>
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+    var checkout_session_id = getUrlParameter('amazonCheckoutSessionId');
+
+    $.ajax({
+        type: 'POST',
+        url: './php/ap_sample_getCheckoutSession.php',
+        data: {
+            checkout_session_id: checkout_session_id
+        },
+    })
+    .then(
+        function(result) { //success
+            var json = $.parseJSON(result).response;
+            console.log(result);
+            $("#checkoutSessionId").html(json.checkoutSessionId);
+            $("#chargeId").html(json.chargeId);
+            $("#chargePermissionId").html(json.chargePermissionId);
+        },
+        function() { //failure
+            console.log("error");
+        }
+    );
+
+    $(".command").on("click", function() {
+        console.log($(this).attr("id"));
+        switch ($(this).attr("id")) {
+        case "createCheckoutSession" :
+            window.open("tester_createCheckoutSession.html", "_blank");
+            break;
+        case "getCheckoutSession" :
+            window.open("tester_getCheckoutSession.html?checkout_session_id=" + $("#checkoutSessionId").html(), "_blank");
+            break;
+        case "updateCheckoutSession" :
+            window.open("tester_updateCheckoutSession.html?checkout_session_id=" + $("#checkoutSessionId").html(), "_blank");
+            break;
+        case "completeCheckoutSession" :
+            window.open("tester_completeCheckoutSession.html?checkout_session_id=" + $("#checkoutSessionId").html(), "_blank");
+            break;
+        case "getChargePermission" :
+            window.open("tester_getChargePermission.html?charge_permission_id=" + $("#chargePermissionId").html(), "_blank");
+            break;
+        case "updateChargePermission" :
+            window.open("tester_updateChargePermission.html?charge_permission_id=" + $("#chargePermissionId").html(), "_blank");
+            break;
+        case "closeChargePermission" :
+            window.open("tester_closeChargePermission.html?charge_permission_id=" + $("#chargePermissionId").html(), "_blank");
+            break;
+        case "createCharge" :
+            window.open("tester_createCharge.html?charge_permission_id=" + $("#chargePermissionId").html(), "_blank");
+            break;
+        case "getCharge" :
+            window.open("tester_getCharge.html?charge_id=" + $("#chargeId").html(), "_blank");
+            break;
+        case "captureCharge" :
+            window.open("tester_captureCharge.html?charge_id=" + $("#chargeId").html(), "_blank");
+            break;
+        case "cancelCharge" :
+            window.open("tester_cancelCharge.html?charge_id=" + $("#chargeId").html(), "_blank");
+            break;
+        case "createRefund" :
+            window.open("tester_createRefund.html?charge_id=" + $("#chargeId").html(), "_blank");
+            break;
+        case "getRefund" :
+            window.open("tester_getRefund.html", "_blank");
+            break;
+        }
+    });
+
+    amazon.Pay.bindChangeAction('#change', {
+        amazonCheckoutSessionId: checkout_session_id,
+        changeAction: 'changePayment' //or changeAddress
+    });
+});
+</script>
+</body>
+</html>
