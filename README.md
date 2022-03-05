@@ -118,31 +118,23 @@ ap_sample_config.php を開き、ご取得頂いた Public Key Id, Private Key �
 ```
 
 ### ③Signature の生成
-基本的な Amazon Pay の購入フローの確認の機能を利用するための signature を生成しま
-す。
+基本的な Amazon Pay の購入フローの確認の機能を利用するための signature を生成します。
 buttonSignatureForcart.php を開き、payload の storeId に取得した値を設定してください。
-checkoutReviewReturnUrl, checkoutResultReturnUrl を貴社の環境に合わせて URL パスを更新し
-てください。
-今すぐ支払うフロー(APB フロー)にて実装を行う場合は、buttonSignatureForapb.php を開き、
-payload の storeId に取得した値を設定してください。checkoutResultReturnUrl を貴社の環境
-に合わせて URL パスを更新してください。
-その後、php コマンドを用いて buttonSignatureForcart.php を実行し、signature の値を取得し
-てください。
+checkoutReviewReturnUrl, checkoutResultReturnUrl を貴社の環境に合わせて URL パスを更新してください。
+今すぐ支払うフロー(APB フロー)にて実装を行う場合は、buttonSignatureForapb.php を開き、payload の storeId に取得した値を設定してください。checkoutResultReturnUrl を貴社の環境に合わせて URL パスを更新してください。
+その後、php コマンドを用いて buttonSignatureForcart.php を実行し、signature の値を取得してください。
 payload と signature の値は、④にて利用します。
 ### ④各 API の設定値更新
 ④-1: 基本的な Amazon Pay の購入フローの確認の機能を利用するために、以下のファイルの設定値を更新します。
 #### updateCheckoutSession.php
-updateCheckoutSession.php を開き、checkoutReviewReturnUrl に③で設定した
-checkoutReviewReturnUrl と同じ値を設定してください。今すぐ支払うフローの場合は、こち
-らの設定は不要です。
+updateCheckoutSession.php を開き、checkoutReviewReturnUrl に③で設定したcheckoutReviewReturnUrl と同じ値を設定してください。今すぐ支払うフローの場合は、こちらの設定は不要です。
 ```php
 'webCheckoutDetails' => array(
  'checkoutResultReturnUrl' => 'https://XXXXXXX/php/result_return.php'
 ),
 ```
 #### cart.html(apb.html)
-cart.html を開き、payload と buttonsignature に③で取得した payload と signature を設定して
-ください。今すぐ支払うフローの場合は、apb.html に対して設定をして下さい。
+cart.html を開き、payload と buttonsignature に③で取得した payload と signature を設定してください。今すぐ支払うフローの場合は、apb.html に対して設定をして下さい。
 ```html
 const payload = '{"storeId":"amzn1.application-oa2-
 client.XXXXXXX","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://XXXXXXX/
@@ -206,7 +198,7 @@ createCheckoutSessionConfig: {
 ```
 
 ### ⑤テストアカウントの用意
-動作を確認するためにサンドボックス環境のテスト用購入者アカウントを用意します。
+動作を確認するためにSANDBOX環境のテスト用購入者アカウントを用意します。
 テストアカウントの作成方法が不明な場合は [FAQ](http://amazonpay-integration.amazon.co.jp/amazonpay-faq-v2/detail.html?id=QA-10/) にてご確認ください。
 ## 疎通確認
 ①～⑤の設定が完了しましたら、cart.html(apb.html)をブラウザなどで開いてください。
@@ -228,35 +220,28 @@ createCheckoutSessionConfig: {
   
 以下の流れで、ボタン表示（CheckoutSessionId 取得）から CompleteCheckoutSession までの操  作を行っていただけます。
   
-※以降は OneTime 機能を事例として記載します。他の機能を試したい場合も流れは同様と
-なるため、読み替えてご覧下さい。
+※以降は OneTime 機能を事例として記載します。他の機能を試したい場合も流れは同様となるため、読み替えてご覧下さい。
   
 
-go to Onetime button render page リンク(下図①)から tester_buttonOnetime.html ページに遷移
-し、Button Render→テストアカウントでログインをしてください。
+go to Onetime button render page リンク(下図①)から tester_buttonOnetime.html ページに遷移し、Button Render→テストアカウントでログインをしてください。
   
 CheckoutSessionId を取得し、tester_resultPage.html に戻ってきます。  
 
 ![01](https://amazon-pay-v2.s3.ap-northeast-1.amazonaws.com/image/amazonpay-cv2-php-sample01.png)
 
-次に、checkout_session_id の行（上図②）にある「update」ボタンを押して tester_
-updateCheckoutSession.html を開いてください。  
+次に、checkout_session_id の行（上図②）にある「update」ボタンを押して tester_updateCheckoutSession.html を開いてください。  
 
 ![02](https://amazon-pay-v2.s3.ap-northeast-1.amazonaws.com/image/amazonpay-cv2-php-sample02.png)
 
 金額等を設定して CheckoutSession を更新することができます。この更新で必要項目が揃うと画面下部の webCheckoutDetails.amazonPayRedirectUrl の行に次のような URL が表示されるようになります。
 ```
-https://apay-us.amazon.com/checkout/processing?amazonCheckoutSessionId=39137b37-afce45b1-bb6f-8971a1e2baaf
+https://payments.amazon.co.jp/checkout/processing?amazonCheckoutSessionId=39137b37-afce45b1-bb6f-8971a1e2baaf
 ```
 
-上記の URL をブラウザなどで開くと、updateCheckoutSession の設定に応じて、オーソリ等の
-処理が進みます。
-最後に、checkout_session_id の行（上図②）にある「complete」ボタンを押して tester_
-completeCheckoutSession.html を開いてください。  
+上記の URL をブラウザなどで開くと、updateCheckoutSession の設定に応じて、オーソリ等の処理が進みます。
+最後に、checkout_session_id の行（上図②）にある「complete」ボタンを押して tester_completeCheckoutSession.html を開いてください。  
 ![03](https://amazon-pay-v2.s3.ap-northeast-1.amazonaws.com/image/amazonpay-cv2-php-sample03.png)
 
-updateCheckoutSession と同じ金額を amount に設定し、completeCheckoutSession を実行しま
-す。この結果、ChargePermissionId と ChargeId が取得できるようになりますので、tester_
-resultPage.html から同じ要領で各種 API を操作してください。
+updateCheckoutSession と同じ金額を amount に設定し、completeCheckoutSession を実行します。この結果、ChargePermissionId と ChargeId が取得できるようになりますので、tester_resultPage.html から同じ要領で各種 API を操作してください。
 ※API のリクエストを行う順番やインターフェースにつきましては、[開発者向け情報ページ](https://pay.amazon.com/jp/developer/documentation)
 からインテグレーションガイド・FAQ にてご確認ください。
