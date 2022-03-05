@@ -9,14 +9,11 @@ https://developer.amazon.com/ja/docs/amazon-pay/intro.html
 1)基本的な Amazon Pay の購入フローの確認  
 2)ボタンの表示・各 API リクエストをする際に必要なパラメータやリクエストの確認  
 1)につきましては、cart.html(abp.html)にアクセスすることで Amazon Pay で最も一般的な購入フローをご確認いただけます。  
-2)につきましては、tester_resultPage.html にアクセスすることで、各 API のパラメータ
-を設定し、リクエストをテストするページに移動することができます。  
+2)につきましては、tester_resultPage.html にアクセスすることで、各 API のパラメータを設定し、リクエストをテストするページに移動することができます。  
 まずは、次の章でサンプルコードの環境準備を行ってください。
 # 環境準備
 ## サンプルコードの取得
-開発者向け情報ページからサンプルコードをご取得ください。
-下表はサンプルコード内のフォルダとファイルの構成です。PHP が動作するテスト用の
-WEB サーバー等に配置してください。
+git cloneなどにてサンプルコードをご取得ください。下表はサンプルコード内のフォルダとファイルの構成です。PHP が動作するテスト用のWEB サーバー等に配置してください。
 
 ```sh
 │ apb.html
@@ -165,12 +162,10 @@ createCheckoutSessionConfig: {
  publicKeyId: '####Set your Public Key Id####'
 }
 ```
-④-2: ボタンの表示・各 API リクエストをする際に必要なパラメータやリクエストの確認
-の機能を利用するために、以下のファイルの設定値を更新します。
+④-2: ボタンの表示・各 API リクエストをする際に必要なパラメータやリクエストの確認の機能を利用するために、以下のファイルの設定値を更新します。
 #### tester_updateCheckoutSession.html
 tester_updateCheckoutSession.html を開き、checkoutReviewReturnUrl, checkoutResultReturnUrl
-に貴社の環境に合わせた URL パスを設定してください。今すぐ支払うフローの場合は、こ
-ちらの設定は不要です。
+に貴社の環境に合わせた URL パスを設定してください。今すぐ支払うフローの場合は、こちらの設定は不要です。
 ```html
 <td>checkoutReviewReturnUrl:</td>
 <td><input id="checkout_review_return_url" class="ap_textbox" style="width:440px;" type="text"
@@ -217,12 +212,9 @@ createCheckoutSessionConfig: {
 ①～⑤の設定が完了しましたら、cart.html(apb.html)をブラウザなどで開いてください。
 以下のフローで、Amazon Pay の購入フローが完了できましたら、設定は完了となります。
 1. Amazon Pay のボタンが表示されたら、それをクリックする。
-2. サンドボックス環境のテスト用購入者アカウントでサインインし、支払方法などを変更せ
-ずに処理を進める。
-3. review_order_page.html ページに遷移した後に「Place Order」(購入)ボタンを押す。(今すぐ
-支払うフローの場合、確認ページを挟まない為当ステップはありません。)
-4. Amazon Pay のプロセスページにリダイレクトした後に order_confirmation.html ページが表
-示される。(今すぐ支払うフローでは、apb_order_confirmation.html ページ)
+2. SANDBOX環境のテスト用購入者アカウントでサインインし、支払方法などを変更せずに処理を進める。
+3. review_order_page.html ページに遷移した後に「Place Order」(購入)ボタンを押す。(今すぐ支払うフローの場合、確認ページを挟まない為当ステップはありません。)
+4. Amazon Pay のプロセスページにリダイレクトした後に order_confirmation.html ページが表示される。(今すぐ支払うフローでは、apb_order_confirmation.html ページ)  
 ※うまく行かない場合は、初期設定の修正忘れや誤りがないか点検してください。合わせて
 ブラウザのコンソールにどのようなエラーが出力されているか確認してください。
 # 当サンプルコードの使い方
@@ -234,8 +226,7 @@ createCheckoutSessionConfig: {
 当サンプルコードでは、すべての API に対になるドライバページ(tester_XXXXXXX.html)を用意  
 しています。それぞれの API の動きをドライバページからご確認ください。  
   
-以下の流れで、ボタン表示（CheckoutSessionId 取得）から CompleteCheckoutSession までの操  
-作を行っていただけます。
+以下の流れで、ボタン表示（CheckoutSessionId 取得）から CompleteCheckoutSession までの操  作を行っていただけます。
   
 ※以降は OneTime 機能を事例として記載します。他の機能を試したい場合も流れは同様と
 なるため、読み替えてご覧下さい。
@@ -253,9 +244,7 @@ updateCheckoutSession.html を開いてください。
 
 ![02](https://amazon-pay-v2.s3.ap-northeast-1.amazonaws.com/image/amazonpay-cv2-php-sample02.png)
 
-金額等を設定して CheckoutSession を更新することができます。この更新で必要項目が揃う
-と画面下部の webCheckoutDetails.amazonPayRedirectUrl の行に次のような URL が表示される
-ようになります。
+金額等を設定して CheckoutSession を更新することができます。この更新で必要項目が揃うと画面下部の webCheckoutDetails.amazonPayRedirectUrl の行に次のような URL が表示されるようになります。
 ```
 https://apay-us.amazon.com/checkout/processing?amazonCheckoutSessionId=39137b37-afce45b1-bb6f-8971a1e2baaf
 ```
