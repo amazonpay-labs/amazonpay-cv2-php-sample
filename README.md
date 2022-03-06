@@ -9,8 +9,7 @@ https://developer.amazon.com/ja/docs/amazon-pay/intro.html
 1)基本的な Amazon Pay の購入フローの確認  
 2)ボタンの表示・各 API リクエストをする際に必要なパラメータやリクエストの確認  
 1)につきましては、cart.html(abp.html)にアクセスすることで Amazon Pay で最も一般的な購入フローをご確認いただけます。  
-2)につきましては、tester_resultPage.html にアクセスすることで、各 API のパラメータを設定し、リクエストをテストするページに移動することができます。  
-まずは、次の章でサンプルコードの環境準備を行ってください。
+2)につきましては、tester_resultPage.html にアクセスすることで、各 API のパラメータを設定し、リクエストをテストするページに移動することができます。まずは、次の章でサンプルコードの環境準備を行ってください。
 # 環境準備
 ## サンプルコードの取得
 git cloneなどにてサンプルコードをご取得ください。下表はサンプルコード内のフォルダとファイルの構成です。PHP が動作するテスト用のWEB サーバー等に配置してください。
@@ -105,7 +104,7 @@ Private Key を Keys ディレクトリに配置してください。
 ※このキーは厳重に管理し、漏洩しているリスクがある秘密キーは絶対に使わないでくださ
 い。
 ### ②ap_sample_config.php の更新
-ap_sample_config.php を開き、ご取得頂いた Public Key Id, Private Key を設定します。
+ap_sample_config.php を開き、取得された Public Key Id, Private Key を設定します。
 ```php
 <?php
  $amazonpay_config = array(
@@ -145,8 +144,7 @@ merchantId に貴社の Merchant Id (出品者 ID)を設定してください。
 ```html
 merchantId: '####Set your MerchantId####',
 ```
-createCheckoutSessionConfig の publicKeyId に貴社の Public Key Id（②で設定したもの）を設定
-してください。
+createCheckoutSessionConfig の publicKeyId に貴社の Public Key Id（②で設定したもの）を設定してください。
 ```html
 createCheckoutSessionConfig: {
  payloadJSON: payload, // payload generated in step 2
@@ -156,8 +154,7 @@ createCheckoutSessionConfig: {
 ```
 ④-2: ボタンの表示・各 API リクエストをする際に必要なパラメータやリクエストの確認の機能を利用するために、以下のファイルの設定値を更新します。
 #### tester_updateCheckoutSession.html
-tester_updateCheckoutSession.html を開き、checkoutReviewReturnUrl, checkoutResultReturnUrl
-に貴社の環境に合わせた URL パスを設定してください。今すぐ支払うフローの場合は、こちらの設定は不要です。
+tester_updateCheckoutSession.html を開き、checkoutReviewReturnUrl, checkoutResultReturnUrlに貴社の環境に合わせた URL パスを設定してください。今すぐ支払うフローの場合は、こちらの設定は不要です。
 ```html
 <td>checkoutReviewReturnUrl:</td>
 <td><input id="checkout_review_return_url" class="ap_textbox" style="width:440px;" type="text"
@@ -199,7 +196,7 @@ createCheckoutSessionConfig: {
 
 ### ⑤テストアカウントの用意
 動作を確認するためにSANDBOX環境のテスト用購入者アカウントを用意します。
-テストアカウントの作成方法が不明な場合は [FAQ](http://amazonpay-integration.amazon.co.jp/amazonpay-faq-v2/detail.html?id=QA-10/) にてご確認ください。
+テストアカウントの作成方法が不明な場合は [FAQ](http://amazonpay-integration.amazon.co.jp/amazonpay-faq-v2/detail.html?id=QA-10) にてご確認ください。
 ## 疎通確認
 ①～⑤の設定が完了しましたら、cart.html(apb.html)をブラウザなどで開いてください。
 以下のフローで、Amazon Pay の購入フローが完了できましたら、設定は完了となります。
