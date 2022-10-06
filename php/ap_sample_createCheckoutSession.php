@@ -23,7 +23,7 @@
         $headers = array('x-amz-pay-Idempotency-Key' => $idempotency_key);
         $client = new Amazon\Pay\API\Client($amazonpay_config);
         $result = $client->createCheckoutSession($payload, $headers);
-        $response = $result['response'];
+        $response = '{"status":' . $result['status'] . ',"response":' . $result['response'] . '}';
 
         echo($response);
 
