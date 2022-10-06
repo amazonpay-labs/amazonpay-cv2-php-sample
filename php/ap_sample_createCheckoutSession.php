@@ -8,19 +8,19 @@
     $store_id = $_POST['store_id'];
     $idempotency_key = $_POST['idempotency_key'];
 
-    $webCheckoutDetail = array('checkoutReviewReturnUrl' => $checkout_review_return_url);
+    $webCheckoutDetails = array('checkoutReviewReturnUrl' => $checkout_review_return_url);
 
     if (null != $checkout_result_return_url) {
-        $webCheckoutDetail = array_merge($webCheckoutDetail, array('checkoutResultReturnUrl' => $checkout_result_return_url));
+        $webCheckoutDetails = array_merge($webCheckoutDetails, array('checkoutResultReturnUrl' => $checkout_result_return_url));
     }
 
     $payload = array_merge(
-        array('webCheckoutDetail' => $webCheckoutDetail),
+        array('webCheckoutDetails' => $webCheckoutDetails),
         array('storeId' => $store_id)
     );
 
     try {
-
+        $headers = array('x-amz-pay-Idempotency-Key' => $idempotency_key);
         $client = new Amazon\Pay\API\Client($amazonpay_config);
         $result = $client->createCheckoutSession($payload, $headers);
         $response = $result['response'];
